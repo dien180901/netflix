@@ -3,7 +3,7 @@
   flex-direction: row;
   justify-content: center;
 }
-.card{
+.dien-card{
   margin-left:25px;
   margin-right:25px;
 
@@ -18,8 +18,10 @@
   position:fixed;
 }
 .cardgroup{
-  margin-top:50px;
+  margin-top:100px;
   margin-bottom: 100px;
+  
+
 }
 .button-more{
   display:flex;
@@ -50,3 +52,11 @@ h5{
   flex-wrap: wrap;
   justify-content: center;
 }
+.range{
+  margin-left: 50px;
+  margin-top:10px;
+  min-width: 300px;
+}
+
+
+

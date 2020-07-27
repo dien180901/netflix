@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react';
-
 import 'bootstrap/dist/css/bootstrap.css';
 import MovieBoard from './components/MovieBoard';
+
+import InputRange from 'react-input-range';
+import "react-input-range/lib/css/index.css"
+
 import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap'
 import './App.css';
 
 let n = 1;
 let clone = [];
+
 const apikey = "58ec1e16f6aa82d80c0564f35db2ba39";
 function App() {
   let [movieList, setMovieList] = useState([]);
   let [loading, setLoading] = useState(false);
+  let [valueMin,setValueMin]=useState(1970);
+  let [valueMax,setValueMax]=useState(2020);
+  let [defaultList,setDefaultList]=useState([]);
   const loadMore = async () => {
     setLoading(true);
     n++;
@@ -22,6 +29,8 @@ function App() {
     clone = clone.concat(data.results);
     setMovieList(clone)
     setLoading(false);
+    setDefaultList(clone);
+    console.log("das",defaultList);
   }
   const callMovie = async () => {
     let url = `https://api.themoviedb.org/3/discover/movie?api_key=${apikey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
@@ -29,7 +38,8 @@ function App() {
     let data = await result.json();
 
     setMovieList(data.results);
-    console.log("default", movieList);
+    setDefaultList(movieList);
+    console.log(data.results);
 
   }
   const handleScroll = () => {
@@ -44,12 +54,26 @@ function App() {
     if (d !== "") {
       let url = `https://api.themoviedb.org/3/search/movie?api_key=${apikey}&language=en-US&page=1&include_adult=false&query=${d}`;
 
-      console.log(url);
+
       let result = await fetch(url);
       let data = await result.json();
-      console.log(data.results);
       setMovieList(data.results);
     }
+  }
+  const filterYear = async () => {
+    console.log(defaultList);
+    setMovieList(defaultList);
+    let filterYears=[];
+     let a = movieList;
+
+     for ( let i =0;i<a.length;i++){
+       let year=parseInt(a[i].release_date.slice(0,4));
+       
+       if (year<=valueMax && year>=valueMin){
+         filterYears.push(a[i]);
+       }
+     }
+     setMovieList(filterYears);
   }
   useEffect(() => {
     callMovie()
@@ -58,6 +82,7 @@ function App() {
   useEffect(() => {
     clone = movieList;
   }, [movieList]);
+ 
   const SortLeastToMost = () => {
     clone = movieList.slice();
 
@@ -74,7 +99,6 @@ function App() {
     }
     movieList = clone;
     setMovieList(clone);
-    console.log("sort", movieList);
   };
   const SortMostToLeast = () => {
     clone = movieList.slice();
@@ -89,14 +113,13 @@ function App() {
     }
     // movieList=clone;
     setMovieList(clone);
-    // console.log(movieList);
+
   }
   const FilterTrending = async () => {
     let url = `https://api.themoviedb.org/3/trending/all/day?api_key=${apikey}`;
-    console.log(url);
+
     let result = await fetch(url);
     let data = await result.json();
-    console.log(data.results);
     setMovieList(data.results);
   }
   if (movieList == null) {
@@ -105,10 +128,10 @@ function App() {
     </div>);
   }
   return (
-    <div className="css-scroll-class" >
-      <div>
+    <div >
+      <div className="css-scroll-class" >
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top" >
-          <Navbar.Brand href="#home">Home</Navbar.Brand>
+          <Navbar.Brand href="#home" onClick={()=>callMovie()}>Home</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
@@ -121,7 +144,14 @@ function App() {
                 <NavDropdown.Divider />
                 <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
               </NavDropdown>
-
+              <div className="range">
+                <InputRange
+                  maxValue={2019}
+                  minValue={1970}
+                  value={{min:valueMin,max:valueMax}}
+                  onChange={(value)=>{setValueMin(value.min);setValueMax(value.max);filterYear();}}
+                />
+              </div>
             </Nav>
             <form>
               <label>
@@ -133,6 +163,9 @@ function App() {
           </Navbar.Collapse>
         </Navbar>
       </div>
+      
+        
+     
       <MovieBoard movieList={movieList} />
     </div>
   );

@@ -7,8 +7,10 @@ export default function MovieBoard(props) {
         rows.push(props.movieList.slice(i*5,i*5+5));
     }
     return (
-        <div className="cardgroup">
-            {props.movieList.map(item=><MovieCard movie={item}/>)}
+        <div className="container d-flex justify-content-center">
+            <div className="cardgroup ">
+                {props.movieList.map(item=><MovieCard movie={item}/>)}
+            </div>
         </div>
     )
 }
