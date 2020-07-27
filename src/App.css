@@ -8,8 +8,11 @@
   margin-right:25px;
 
   margin-top:30px;
-  cursor:pointer;
 
+
+}
+.card:hover{
+  cursor:pointer;
 }
 .nav{
   position:fixed;
@@ -21,4 +24,29 @@
 .button-more{
   display:flex;
   align-items: center;
+}
+.bg-dark {
+  background-color: rgba(19, 17, 17, 0.253)!important;
+}
+.btn-search{
+  border-radius:40px;
+
+}
+.input-search{
+  border:2px solid black;
+  border-radius:40px;
+}
+.card-background{
+  color:white;
+  word-wrap: break-word;
+  width:130px;
+  opacity: 1;
+}
+h5{
+  font-size:14px;
+}
+.cardgroup{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
