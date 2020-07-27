@@ -30,7 +30,6 @@ function App() {
     setMovieList(clone)
     setLoading(false);
     setDefaultList(clone);
-    console.log("das",defaultList);
   }
   const callMovie = async () => {
     let url = `https://api.themoviedb.org/3/discover/movie?api_key=${apikey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
