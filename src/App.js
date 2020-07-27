@@ -3,12 +3,11 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import MovieBoard from './components/MovieBoard';
 import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap'
-import Carousel from 'react-bootstrap/Carousel'
 import './App.css';
 
 let n = 1;
 let clone = [];
-const apikey = process.env.REACT_APP_APIKEY;
+const apikey = "58ec1e16f6aa82d80c0564f35db2ba39";
 function App() {
   let [movieList, setMovieList] = useState([]);
   let [loading, setLoading] = useState(false);

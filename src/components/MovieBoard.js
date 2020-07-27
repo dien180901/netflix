@@ -1,5 +1,4 @@
 import React from 'react'
-import RowCard from './RowCard'
 import MovieCard from './MovieCard'
 
 export default function MovieBoard(props) {
