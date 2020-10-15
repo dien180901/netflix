@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import MovieBoard from './components/MovieBoard';
-
+import $ from 'jquery';
 import InputRange from 'react-input-range';
 import "react-input-range/lib/css/index.css"
 
-import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown, Button, Form, FormControl } from 'react-bootstrap'
 import './App.css';
 
 let n = 1;
@@ -15,9 +15,9 @@ const apikey = "58ec1e16f6aa82d80c0564f35db2ba39";
 function App() {
   let [movieList, setMovieList] = useState([]);
   let [loading, setLoading] = useState(false);
-  let [valueMin,setValueMin]=useState(1970);
-  let [valueMax,setValueMax]=useState(2020);
-  let [defaultList,setDefaultList]=useState([]);
+  let [valueMin, setValueMin] = useState(1970);
+  let [valueMax, setValueMax] = useState(2020);
+  let [defaultList, setDefaultList] = useState([]);
   const loadMore = async () => {
     setLoading(true);
     n++;
@@ -62,17 +62,17 @@ function App() {
   const filterYear = async () => {
     console.log(defaultList);
     setMovieList(defaultList);
-    let filterYears=[];
-     let a = movieList;
+    let filterYears = [];
+    let a = movieList;
 
-     for ( let i =0;i<a.length;i++){
-       let year=parseInt(a[i].release_date.slice(0,4));
-       
-       if (year<=valueMax && year>=valueMin){
-         filterYears.push(a[i]);
-       }
-     }
-     setMovieList(filterYears);
+    for (let i = 0; i < a.length; i++) {
+      let year = parseInt(a[i].release_date.slice(0, 4));
+
+      if (year <= valueMax && year >= valueMin) {
+        filterYears.push(a[i]);
+      }
+    }
+    setMovieList(filterYears);
   }
   useEffect(() => {
     callMovie()
@@ -81,7 +81,7 @@ function App() {
   useEffect(() => {
     clone = movieList;
   }, [movieList]);
- 
+
   const SortLeastToMost = () => {
     clone = movieList.slice();
 
@@ -99,6 +99,23 @@ function App() {
     movieList = clone;
     setMovieList(clone);
   };
+  $('.navTrigger').click(function () {
+    $(this).toggleClass('active');
+    console.log("Clicked menu");
+    $("#mainListDiv").toggleClass("show_list");
+    $("#mainListDiv").fadeIn();
+
+});
+$(window).scroll(function () {
+	if ($(document).scrollTop() > 50) {
+		$(".nav").addClass("affix");
+		console.log("OK");
+	} else {
+		$(".nav").removeClass("affix");
+		
+	}
+});
+
   const SortMostToLeast = () => {
     clone = movieList.slice();
     for (let i = 0; i < clone.length - 1; i++) {
@@ -128,44 +145,34 @@ function App() {
   }
   return (
     <div >
-      <div className="css-scroll-class" >
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top" >
-          <Navbar.Brand href="#home" onClick={()=>callMovie()}>Home</Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="mr-auto">
-              <Nav.Link href="#features">Features</Nav.Link>
-              <Nav.Link href="#pricing">Pricing</Nav.Link>
-              <NavDropdown title="Sort" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1" onClick={SortLeastToMost}>Least Popular To Most Popular  </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2" onClick={SortMostToLeast}>Most Popular To Least Popular</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3" onClick={FilterTrending}>Trending</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-              </NavDropdown>
-              <div className="range">
-                <InputRange
-                  maxValue={2019}
-                  minValue={1970}
-                  value={{min:valueMin,max:valueMax}}
-                  onChange={(value)=>{setValueMin(value.min);setValueMax(value.max);filterYear();}}
-                />
-              </div>
-            </Nav>
-            <form>
-              <label>
-                <input type="text" name="name" id="input" className="input-search" />
-              </label>
-              <Button variant="dark" onClick={search} className="btn-search">Search</Button>
-
-            </form>
-          </Navbar.Collapse>
-        </Navbar>
-      </div>
-      
+      {/* <div className="css-scroll-class" >
         
-     
-      <MovieBoard movieList={movieList} />
+      </div> */}
+      <div>
+        <nav class="nav">
+          <div class="dm-container">
+            <div class="logo">
+              <a href="#"><img src="images/netflix-logo.jpg" class="dm-logo"/></a>
+            </div>
+            <div id="mainListDiv" class="main_list">
+              <ul class="navlinks">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Portfolio</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+            <span class="navTrigger">
+              <i></i>
+              <i></i>
+              <i></i>
+            </span>
+          </div>
+        </nav>
+      </div>
+
+
+      {/* <MovieBoard movieList={movieList} /> */}
     </div>
   );
 }
