@@ -105,16 +105,16 @@ function App() {
     $("#mainListDiv").toggleClass("show_list");
     $("#mainListDiv").fadeIn();
 
-});
-$(window).scroll(function () {
-	if ($(document).scrollTop() > 50) {
-		$(".nav").addClass("affix");
-		console.log("OK");
-	} else {
-		$(".nav").removeClass("affix");
-		
-	}
-});
+  });
+  $(window).scroll(function () {
+    if ($(document).scrollTop() > 50) {
+      $(".nav").addClass("affix");
+      console.log("OK");
+    } else {
+      $(".nav").removeClass("affix");
+
+    }
+  });
 
   const SortMostToLeast = () => {
     clone = movieList.slice();
@@ -149,20 +149,36 @@ $(window).scroll(function () {
         
       </div> */}
       <div>
-        <nav class="nav">
-          <div class="dm-container">
-            <div class="logo">
-              <a href="#"><img src="images/netflix-logo.jpg" class="dm-logo"/></a>
+        <nav className="nav">
+          <div className="dm-container">
+            <div className="logo">
+              <a href="#"><img src="images/netflix-logo.jpg" className="dm-logo" /></a>
             </div>
-            <div id="mainListDiv" class="main_list">
-              <ul class="navlinks">
-                <li><a href="#">About</a></li>
-                <li><a href="#">Portfolio</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
-              </ul>
+            <div className="dm-navListContainer">
+              <div id="mainListDiv" className="main_list">
+                <ul className="dm-navlinks">
+                  <li><a href="#">Home</a></li>
+                  <li><a href="#">TV Shows</a></li>
+                  <li><a href="#">Movies</a></li>
+                  <li><a href="#">Latest</a></li>
+                  <li><a href="#">My List</a></li>
+                </ul>
+              </div>
+              <div id="mainListDiv" className="main_list">
+                <ul className="navlinks">
+                  <div className="search-box">
+                  <input className="search-txt" type="text" name="" placeholder="Type to search"/>
+                  <a className="icon" href="#" ><i className="fas fa-search fa-lg dm-icon"></i></a>
+                </div>
+                  
+                  <li><a href="#">Portfolio</a></li>
+                  <li><a href="#">Services</a></li>
+                  <li><a href="#">Contact</a></li>
+                </ul>
+              </div>
             </div>
-            <span class="navTrigger">
+
+            <span className="navTrigger">
               <i></i>
               <i></i>
               <i></i>
